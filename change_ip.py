@@ -4,22 +4,22 @@ import os
 import shutil
 import subprocess
 
-ipaddres = "192.168.3.65"
+ipaddres = "192.168.3.126"
 netmask = '255.255.255.0'
 gateway = '192.168.3.1'
 dns_prymary = '8.8.8.8'
 dns_secundary = '8.8.4.4'
-dhcp = False
-restart_network = '/etc/init.d/networking restart'
+dhcp = True
+restart_network = 'sudo /etc/init.d/networking restart'
 file_interfaces = '/etc/network/interfaces'
 file_name = 'interfaces'
 route_first_file = './interfaces'
 
 
 if dhcp == False:
-    data = ' \
-auto eth1\
-iface eth1 inet static\n \
+    data = '\
+auto eth0\n \
+iface eth0 inet static\n \
         address {}\n \
         netmask {}\n \
         gateway {}\n \
@@ -33,8 +33,8 @@ iface eth1 inet static\n \
     dns_secundary
 )
 else:
-    data = ' \
-auto eth1\
+    data = '\
+auto eth0\n\
 iface eth0 inet dhcp\n \
 '
 
