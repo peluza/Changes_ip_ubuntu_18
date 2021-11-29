@@ -4,7 +4,7 @@ import os
 import shutil
 import subprocess
 
-ipaddres = "192.168.3.126"
+ipaddres = "192.168.3.127"
 netmask = '255.255.255.0'
 gateway = '192.168.3.1'
 dns_prymary = '8.8.8.8'
@@ -14,29 +14,30 @@ restart_network = 'sudo /etc/init.d/networking restart'
 file_interfaces = '/etc/network/interfaces'
 file_name = 'interfaces'
 route_first_file = './interfaces'
+networking = 'enp0s3'
 
 
 if dhcp == False:
     data = '\
-auto eth0\n \
-iface eth0 inet static\n \
-        address {}\n \
-        netmask {}\n \
-        gateway {}\n \
-        dns-nameserver {} \n \
-        dns-nameserver {}\n \
+auto {networking}\n\
+iface {networking} inet static\n\
+  address {ipaddres}\n\
+  netmask {netmask}\n\
+  gateway {gateway}\n\
+  dns-nameserver {dns_prymary} {dns_secundary}\n\
 '.format(
-    ipaddres,
-    netmask,
-    gateway,
-    dns_prymary,
-    dns_secundary
+    networking=networking,
+    ipaddres=ipaddres,
+    netmask=netmask,
+    gateway=gateway,
+    dns_prymary=dns_prymary,
+    dns_secundary=dns_secundary
 )
 else:
     data = '\
-auto eth0\n\
-iface eth0 inet dhcp\n \
-'
+auto {networking}\n\
+iface {networking} inet dhcp\n\
+'.format(networking=networking)
 
 print(data)
 
